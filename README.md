@@ -15,21 +15,21 @@ O diagrama abaixo ilustra o fluxo de dados assíncrono implementado. Quando um c
 ```mermaid
 graph TD
     subgraph "Fluxo de Requisição"
-        Client[Cliente API (Ex: Postman)] -- 1. POST /users (JSON) --> US[usuario-service 8080]
+        Client[Cliente API (Ex: Postman)] -- POST /users (JSON) --> US[usuario-service 8080]
     end
 
     subgraph "Serviço de Usuário (Produtor)"
-        US -- 2. Salva no DB --> DB[(PostgreSQL)]
-        US -- 3. Publica Mensagem --> RMQ(RabbitMQ Exchange)
+        US -- Salva no DB --> DB[(PostgreSQL)]
+        US -- Publica Mensagem --> RMQ(RabbitMQ Exchange)
     end
 
     subgraph "Broker de Mensageria"
-        RMQ -- 4. Roteia --> Queue[email.welcome.queue]
+        RMQ -- Roteia --> Queue[email.welcome.queue]
     end
 
     subgraph "Serviço de Email (Consumidor)"
-        Queue -- 5. Entrega Mensagem --> ES[email-service 8081]
-        ES -- 6. Processa (Simula Envio) --> Log[Console Log]
+        Queue -- Entrega Mensagem --> ES[email-service 8081]
+        ES -- Processa (Simula Envio) --> Log[Console Log]
     end
 ````
 
@@ -206,4 +206,5 @@ O maior benefício desta arquitetura é a resiliência. Realizamos um teste de "
 
 ```
 ```
+
 
